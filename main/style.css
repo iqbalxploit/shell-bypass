@@ -1,0 +1,14 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css');
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Baumans');
+body {
+	font-family:'Baumans';
+}
+.ico {
+	width:20px;
+}
+::selection {
+	color: #fff;
+	background: #1f1f1f;
+}

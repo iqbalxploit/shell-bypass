@@ -1,6 +1,6 @@
 const typedTextSpan = document.querySelector(".typed-text");
 const cursorSpan = document.querySelector(".cursor");
-const textArray = ["comand shell using ajax", "and comfortable to use", "use the command according to the OS."];
+const textArray = ["usage > whoami| id | uname -a | ls -la | set","comand shell using ajax", "and comfortable to use", "use the command according to the OS."];
 const typingDelay = 150;
 const erasingDelay = 50;
 const newTextDelay = 1000; // Delay between current and next text

